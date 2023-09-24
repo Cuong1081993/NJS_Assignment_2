@@ -9,8 +9,9 @@ exports.getHotels = async (req, res, next) => {
 
 exports.searchKey = async (req, res, next) => {
   const destination = req.query.destination;
-  const hotels = await Hotel.find({ $text: { $search: destination } });
-  res.status(200).json({ message: `Hotel in ${destination}`, hotels: hotels });
+  const hotel = await Hotel.find({ $text: { $search: destination } });
+  console.log(hotel);
+  res.status(200).json({ message: `Hotel in ${destination}`, hotels: hotel });
 };
 
 exports.byRating = async (req, res, next) => {

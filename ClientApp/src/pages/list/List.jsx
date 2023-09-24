@@ -4,17 +4,31 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
+import { useDispatch, useSelector } from "react-redux";
+import { loadHotelsBySearchKey } from "../../store/hotel";
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
+  // const [destination, setDestination] = useState(location.state.destination);
+  const [destination, setDestination] = useState("Earum velit tenetur");
+
   const [date, setDate] = useState(location.state.date);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
+
+  const dispatch = useDispatch();
+  const { hotelsBySearchKey, loading } = useSelector((state) => state.hotels);
+
+  useEffect(() => {
+    dispatch(loadHotelsBySearchKey(destination));
+  }, []);
+  const handleSearch = () => {
+    dispatch(loadHotelsBySearchKey(destination));
+  };
 
   return (
     <div>
@@ -26,7 +40,11 @@ const List = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input
+                placeholder={destination}
+                type="text"
+                onChange={(e) => setDestination(e.target.value)}
+              />
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
@@ -86,16 +104,16 @@ const List = () => {
                 </div>
               </div>
             </div>
-            <button>Search</button>
+            <button onClick={handleSearch}>Search</button>
           </div>
           <div className="listResult">
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+            {hotelsBySearchKey.map((hotel) => {
+              return <SearchItem key={hotel._id} hotel={hotel} />;
+            })}
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

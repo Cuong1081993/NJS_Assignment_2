@@ -68,6 +68,6 @@ export const loadHotelsBySearchKey = (keyword) =>
     url: url + `/search?destination=${keyword}`,
     method: "GET",
     onStart: apiRequest.type,
-    onSuccess: getHotels.type,
+    onSuccess: getHotelsBySearchKey.type,
     onError: apiRequestFailed.type,
   });
