@@ -109,10 +109,11 @@ const Hotel = () => {
               <span>{hotel.address}</span>
             </div>
             <span className="hotelDistance">
-              Excellent location – 500m from center
+              Excellent location – {hotel.distance}m from center
             </span>
             <span className="hotelPriceHighlight">
-              Book a stay over $114 at this property and get a free airport taxi
+              Book a stay over ${hotel.cheapestPrice} at this property and get a
+              free airport taxi
             </span>
             <div className="hotelImages">
               {hotel.photos

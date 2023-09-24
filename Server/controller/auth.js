@@ -41,8 +41,10 @@ exports.signUp = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
+
   try {
     const user = await User.findOne({ email: email });
+    console.log(req.body.email);
     if (!user) {
       const err = new Error(`User with ${email} does not match`);
       err.code = 401;

@@ -1,6 +1,21 @@
+import { useSelector } from "react-redux";
 import "./propertyList.css";
 
 const PropertyList = () => {
+  const { loading, hotels } = useSelector((state) => state.hotels);
+  // filter hotels array to find hotel.type === hotel and add to hotelQuantity
+  // if does not match, the lenght have value = 0
+  const hotelQuantity =
+    hotels.filter((hotel) => hotel.type === "hotel").length || 0;
+  const apartmentQuantity =
+    hotels.filter((hotel) => hotel.type === "apartment").length || 0;
+  const resortQuantity =
+    hotels.filter((hotel) => hotel.type === "resort").length || 0;
+  const villaQuantity =
+    hotels.filter((hotel) => hotel.type === "villa").length || 0;
+  const cabinQuantiy =
+    hotels.filter((hotel) => hotel.type === "cabin").length || 0;
+
   return (
     <div className="pList">
       <div className="pListItem">
@@ -11,7 +26,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Hotels</h1>
-          <h2>233 hotels</h2>
+          <h2>{hotelQuantity} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -22,7 +37,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Apartments</h1>
-          <h2>2331 hotels</h2>
+          <h2>{apartmentQuantity} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -33,7 +48,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Resorts</h1>
-          <h2>2331 hotels</h2>
+          <h2>{resortQuantity} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -44,7 +59,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Villas</h1>
-          <h2>2331 hotels</h2>
+          <h2>{villaQuantity} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -55,7 +70,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Cabins</h1>
-          <h2>2331 hotels</h2>
+          <h2>{cabinQuantiy} hotels</h2>
         </div>
       </div>
     </div>

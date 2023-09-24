@@ -57,7 +57,7 @@ export const loadHotels = () =>
   });
 export const loadHotelsByRating = () =>
   apiCall({
-    url: url + "/byratin",
+    url: url + "/byrating",
     method: "GET",
     onStart: apiRequest.type,
     onSuccess: getHotels.type,
