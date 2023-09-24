@@ -5,6 +5,7 @@ import List from "./pages/list/List";
 import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
 import Booking from "./pages/booking/Booking";
+import Transaction from "./pages/transaction/Transaction";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/hotels" element={<List />} />
         <Route path="/hotels/:id" element={<Hotel />} />
-        <Route path="/booking" element={<Booking />} />
+        <Route path="/hotels/:id/booking" element={<Booking />} />
+        <Route path="/transactions" element={<Transaction />} />
       </Routes>
     </BrowserRouter>
   );

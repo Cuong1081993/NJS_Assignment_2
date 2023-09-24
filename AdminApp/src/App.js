@@ -7,6 +7,10 @@ import Register from "./pages/Register/Register";
 import Page404 from "./pages/404/404";
 import Page500 from "./pages/500/500";
 import DefaultLayout from "./components/DefaultLayout/DefaultLayout";
+import Transaction from "./components/transaction/Transaction";
+import RequieAuth from "./RequieAuth";
+import Dashboard from "./components/Dashboard/Dashboard";
+import { useEffect } from "react";
 const AuthContext = createContext();
 
 function App() {
@@ -17,6 +21,12 @@ function App() {
   const logoutHandler = () => {
     setIsAuth(false);
   };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    setIsAuth(userId.length > 0);
+  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -36,6 +46,13 @@ function App() {
             />
             <Route exact path="/404" name="Page 404" element={<Page404 />} />
             <Route exact path="/500" name="Page 500" element={<Page500 />} />
+
+            {/* <Route path="/" element={<DefaultLayout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route element={<RequieAuth />}>
+                <Route path="/transactions" element={<Transaction />} />
+              </Route>
+            </Route> */}
             <Route
               path="*"
               name="Admin Home Page"

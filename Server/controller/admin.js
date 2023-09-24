@@ -14,7 +14,6 @@ exports.getHotelById = async (req, res, next) => {
 };
 
 exports.addHotel = async (req, res, next) => {
-  console.log("req", req.body);
   const newHotel = new Hotel({
     name: req.body.name,
     title: req.body.title,

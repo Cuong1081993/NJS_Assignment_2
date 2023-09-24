@@ -34,7 +34,7 @@ const AddHotel = () => {
       } else if (e.target.name === "rooms") {
         const selectedOptions = e.target.selectedOptions;
         const newRooms = [];
-        for (let i = 0; i < selectedOptions.lengh; i++) {
+        for (let i = 0; i < selectedOptions.length; i++) {
           newRooms.push(selectedOptions[i].value);
         }
         return {
@@ -59,6 +59,7 @@ const AddHotel = () => {
         console.log(error);
       }
     }
+    console.log(newHotel);
   };
   return (
     <div className="container">
@@ -247,7 +248,7 @@ const AddHotel = () => {
               </label>
               <select
                 className="form-select"
-                size=""
+                size="4"
                 aria-label="size 4 select example"
                 name="rooms"
                 required

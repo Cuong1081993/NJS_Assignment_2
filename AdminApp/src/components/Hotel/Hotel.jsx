@@ -23,7 +23,7 @@ const Hotel = () => {
       }
     };
     fetchAllHotel();
-  }, []);
+  }, [hotels]);
 
   const editHandler = (e, hotelId) => {
     navigate(`/editHotel/${hotelId}`, { state: { hotelId: hotelId } });
@@ -35,7 +35,8 @@ const Hotel = () => {
           url: `http://localhost:5000/api/admin/deleteHotel/${hotelId}`,
           method: "DELETE",
         });
-        setHotels(response.data.hotels);
+        const newHotels = hotels.filter((item) => item.id !== hotelId);
+        setHotels(newHotels);
       } catch (error) {
         if (error) {
           setErrorMessage(error.message);

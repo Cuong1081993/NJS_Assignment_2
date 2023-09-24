@@ -26,7 +26,7 @@ const Navbar = () => {
                 <Link to={"/"}>User:{userName || ""}</Link>
               </button>
               <button className="navButton btn btn-success">
-                <Link to={"/transaction"}>Transaction</Link>
+                <Link to={"/transactions"}>Transaction</Link>
               </button>
               <button
                 onClick={handleLogout}

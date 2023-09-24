@@ -6,6 +6,8 @@ const Transaction = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [transactions, setTransactions] = useState([]);
 
+  console.log("Transaction");
+
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
@@ -42,7 +44,7 @@ const Transaction = () => {
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {transactions.length === 0 ? (
+            {!transactions.length ? (
               <tr>
                 <td colSpan={7}>
                   <Loading />
@@ -51,32 +53,40 @@ const Transaction = () => {
             ) : (
               transactions.map((transaction) => {
                 return (
-                  <tr key={transaction._id}>
-                    <th scope="row">{transaction._id}</th>
-                    <td>{transaction.user.userName}</td>
-                    <td>{transaction.hotel.name}</td>
-                    <td>
-                      {transaction.room.map((r) => (
-                        <span>{r}</span>
-                      ))}
-                    </td>
-                    <td>
-                      {format(new Date(transaction.dateStart), "dd/MM/yyy") +
-                        "-" +
-                        format(new Date(transaction.dateEnd), "dd/MM/yyyy")}
-                    </td>
-                    <td>
-                      <span
-                        className={
-                          transaction.status !== "Booked"
-                            ? "btn btn-outline-success"
-                            : "btn btn-outline-danger"
-                        }
-                      >
-                        {transaction.status}
-                      </span>
-                    </td>
-                  </tr>
+                  transaction.hotel &&
+                  transaction.user && (
+                    <tr key={transaction._id}>
+                      <th scope="row">{transaction._id}</th>
+                      <td>{transaction.user.userName}</td>
+                      <td>{transaction.hotel.name}</td>
+                      <td>
+                        {transaction.room.map((r, i) => (
+                          <span key={i}>
+                            {r}
+                            {i < transaction.room.length - 1 && ", "}
+                          </span>
+                        ))}
+                      </td>
+                      <td>
+                        {format(new Date(transaction.dateStart), "dd/MM/yyy") +
+                          "-" +
+                          format(new Date(transaction.dateEnd), "dd/MM/yyyy")}
+                      </td>
+                      <td>{transaction.price}</td>
+                      <td>{transaction.payment}</td>
+                      <td>
+                        <span
+                          className={
+                            transaction.status !== "Booked"
+                              ? "btn btn-outline-success"
+                              : "btn btn-outline-danger"
+                          }
+                        >
+                          {transaction.status}
+                        </span>
+                      </td>
+                    </tr>
+                  )
                 );
               })
             )}

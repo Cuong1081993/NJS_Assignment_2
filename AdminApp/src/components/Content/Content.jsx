@@ -8,19 +8,22 @@ import Room from "../room/Room";
 import EditHotel from "../editHotel/EditHotel";
 import EditRoom from "../editRoom/EditRoom";
 import Transaction from "../transaction/Transaction";
+import RequieAuth from "../../RequieAuth";
 
 const Content = ({ isAuth }) => {
-  const RequieAuth = ({ children }) => {
-    const location = useLocation();
-    return isAuth === true ? (
-      children
-    ) : (
-      <Navigate to="/login" replace state={{ path: location.pathname }} />
-    );
-  };
+  // const RequieAuth = ({ children }) => {
+  //   const location = useLocation();
+  //   return isAuth === true ? (
+  //     children
+  //   ) : (
+  //     <Navigate to="/login" replace state={{ path: location.pathname }} />
+  //   );
+  // };
+
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route
           path="/dashboard"
           name="Dashboard"
@@ -93,6 +96,9 @@ const Content = ({ isAuth }) => {
             </RequieAuth>
           }
         />
+        {/* <Route element={<RequieAuth />}>
+          <Route path="/transactions" element={<Transaction />} />
+        </Route> */}
         <Route
           path="/transactions"
           name="Transaction"
@@ -102,7 +108,6 @@ const Content = ({ isAuth }) => {
             </RequieAuth>
           }
         />
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </div>
   );

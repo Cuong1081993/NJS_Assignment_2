@@ -13,7 +13,7 @@ const Dashboard = () => {
     const fetchTransaction = async () => {
       try {
         const response = await axios({
-          url: `http://localhost:5000/api/admin/transaction`,
+          url: `http://localhost:5000/api/admin/transactions`,
           method: "GET",
         });
         setTransactions(response.data.transactions);
@@ -24,6 +24,7 @@ const Dashboard = () => {
       }
       fetchTransaction();
     };
+    console.log(transactions);
   }, []);
   return (
     <div>
@@ -53,11 +54,11 @@ const Dashboard = () => {
               transactions.map((transaction) => {
                 return (
                   <tr key={transaction._id}>
-                    <th scope="row">{countNum}</th>
+                    <th scope="row">{countNum++}</th>
                     <td>{transaction.hotel.name}</td>
                     <td>
-                      {transaction.room.map((r) => {
-                        <span key={r}>{r}</span>;
+                      {transaction.room.map((r, i) => {
+                        <span key={i}>{r}</span>;
                       })}
                     </td>
                     <td>

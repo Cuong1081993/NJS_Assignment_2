@@ -60,7 +60,7 @@ export const loadHotelsByRating = () =>
     url: url + "/byrating",
     method: "GET",
     onStart: apiRequest.type,
-    onSuccess: getHotels.type,
+    onSuccess: getHotelsByRating.type,
     onError: apiRequestFailed.type,
   });
 export const loadHotelsBySearchKey = (keyword) =>

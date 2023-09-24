@@ -5,7 +5,7 @@ import { Suspense, useEffect } from "react";
 import { loadHotelsByRating } from "../../store/hotel";
 import Loading from "../Loading/Loading";
 
-const FeaturedItem = (hotel) => {
+const FeaturedItem = ({ hotel }) => {
   return (
     <div className="fpItem">
       <Link to={`/hotels/${hotel._id}`}>
@@ -25,11 +25,13 @@ const FeaturedItem = (hotel) => {
 const FeaturedProperties = () => {
   const dispatch = useDispatch();
   const { hotelsByRating, loading } = useSelector((state) => state.hotels);
+
   useEffect(() => {
     dispatch(loadHotelsByRating());
-    console.log("aaaa");
+    // console.log("aaaa");
   }, []);
-  console.log(hotelsByRating);
+  // console.log(hotelsByRating);
+
   return (
     <>
       {loading || hotelsByRating.length < 1 ? (

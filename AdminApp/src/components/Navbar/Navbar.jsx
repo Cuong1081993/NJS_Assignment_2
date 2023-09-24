@@ -14,7 +14,7 @@ const NavBar = () => {
   const [hotels, setHotels] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [users, setUsers] = useState([]);
-  const [transaction, setTransaction] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const fetchTransaction = async () => {
@@ -53,10 +53,10 @@ const NavBar = () => {
       }
       try {
         const response = await axios({
-          url: `http://localhost:5000/api/admin/transaction`,
+          url: `http://localhost:5000/api/admin/transactions`,
           method: "GET",
         });
-        setTransaction(response.data.transaction);
+        setTransactions(response.data.transactions);
       } catch (error) {
         if (error) {
           setErrorMessage(error.message);
@@ -110,7 +110,7 @@ const NavBar = () => {
             <div className="card-body">
               <FontAwesomeIcon icon={faMoneyBill} />
               <p className="card-text">
-                Total Transaction :{transaction.length}{" "}
+                Total Transaction :{transactions.length}
               </p>
             </div>
           </div>

@@ -12,6 +12,7 @@ exports.searchKey = async (req, res, next) => {
   const hotels = await Hotel.find({ $text: { $search: destination } });
   res.status(200).json({ message: `Hotel in ${destination}`, hotels: hotels });
 };
+
 exports.byRating = async (req, res, next) => {
   const hotels = await Hotel.find().sort({ rating: -1 }).limit(5);
   res.status(200).json({ message: "Hotels by rating", hotels: hotels });
@@ -49,6 +50,6 @@ exports.booking = async (req, res, next) => {
 
 exports.transaction = async (req, res, next) => {
   const { user } = req.body;
-  const transaction = await Transaction.find({ user: user }).populate("hotel");
-  res.status(200).json({ message: "Transaction", transaction: transaction });
+  const transactions = await Transaction.find({ user: user }).populate("hotel");
+  res.status(200).json({ message: "Transaction", transactions: transactions });
 };
