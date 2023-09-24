@@ -22,6 +22,7 @@ const Booking = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [rooms, setRooms] = useState([]);
+  const [roomPrice, setRoomPrice] = useState(0);
   const [bookingData, setBookingData] = useState(initialBookingData);
   const [hotel, setHotel] = useState({});
   const [roomsBooked, setRoomsBooked] = useState([]);
@@ -31,12 +32,7 @@ const Booking = () => {
     { startDate: new Date(), endDate: new Date(), key: "selection" },
   ]);
 
-  const handleChange = (e) => {
-    setBookingData((prevState) => {
-      return { ...prevState, [e.target.name]: e.target.value };
-    });
-  };
-  const handleOnCheck = (e, roomPrice) => {
+  useEffect(() => {
     const day =
       (Date.parse(date[0].endDate) - Date.parse(date[0].startDate)) / 86400000 >
       0
@@ -46,21 +42,27 @@ const Booking = () => {
             86400000) *
           -1;
 
-    const index = roomsBooked.findIndex(
-      (roomBked) => roomBked === e.target.value
-    );
+    setTotalBill(roomPrice * day * roomsBooked.length);
+  }, [roomsBooked, date]);
+
+  const handleChange = (e) => {
+    setBookingData((prevState) => {
+      return { ...prevState, [e.target.name]: e.target.value };
+    });
+  };
+  const handleOnCheck = (e, roomPrice) => {
+    setRoomPrice(roomPrice);
+
     if (e.target.checked) {
-      setTotalBill(totalBill + roomPrice * day);
-      if (index < 0) {
+      if (roomsBooked.length === 0) {
+        setRoomsBooked([e.target.value]);
+      } else {
         setRoomsBooked([...roomsBooked, e.target.value]);
-      } else if (!e.target.checked) {
-        setTotalBill(totalBill + roomPrice * day);
-        if (index >= 0) {
-          setRoomsBooked(
-            roomsBooked.filter((room) => room !== e.tartget.value)
-          );
-        }
       }
+    } else {
+      const roomsName = roomsBooked.filter((item) => item !== e.target.value);
+
+      setRoomsBooked(roomsName);
     }
   };
 
@@ -137,12 +139,12 @@ const Booking = () => {
                 <div className="col-12 col-md-4 d-flex flex-column align-items-baseline">
                   <h3>
                     <b>Dates :</b>
-                    {/* <span className="headerSearchText d-flex flex-column align-items-center ">
-                    {`${format(date[0].startDate, "MM/dd/yyy")} to ${format(
-                      date[0].endDate,
-                      "MM/dd/yyyy"
-                    )}`}
-                  </span> */}
+                    <span className="headerSearchText d-flex flex-column align-items-center ">
+                      {`${format(date[0].startDate, "MM/dd/yyy")} to ${format(
+                        date[0].endDate,
+                        "MM/dd/yyyy"
+                      )}`}
+                    </span>
                   </h3>
                   <DateRange
                     editableDateInputs={true}
