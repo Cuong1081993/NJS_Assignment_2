@@ -94,7 +94,7 @@ const Content = ({ isAuth }) => {
           }
         />
         <Route
-          path="/transaction"
+          path="/transactions"
           name="Transaction"
           element={
             <RequieAuth>

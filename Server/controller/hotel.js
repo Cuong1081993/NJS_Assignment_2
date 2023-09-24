@@ -13,7 +13,7 @@ exports.searchKey = async (req, res, next) => {
   res.status(200).json({ message: `Hotel in ${destination}`, hotels: hotels });
 };
 exports.byRating = async (req, res, next) => {
-  const hotels = await Hotel.find().sort({ rating: -1 }).limit(3);
+  const hotels = await Hotel.find().sort({ rating: -1 }).limit(5);
   res.status(200).json({ message: "Hotels by rating", hotels: hotels });
 };
 

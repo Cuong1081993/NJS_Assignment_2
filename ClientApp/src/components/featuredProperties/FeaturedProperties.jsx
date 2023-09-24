@@ -15,7 +15,7 @@ const FeaturedItem = (hotel) => {
       <span className="fpCity">{hotel.city}</span>
       <span className="fpPrice">Starting from ${hotel.cheapestPrice}</span>
       <div className="fpRating">
-        <button>{hotel.rating}/5</button>
+        <button>{hotel.rating}/10</button>
         <span>Excellent</span>
       </div>
     </div>
@@ -25,11 +25,11 @@ const FeaturedItem = (hotel) => {
 const FeaturedProperties = () => {
   const dispatch = useDispatch();
   const { hotelsByRating, loading } = useSelector((state) => state.hotels);
-
   useEffect(() => {
     dispatch(loadHotelsByRating());
+    console.log("aaaa");
   }, []);
-
+  console.log(hotelsByRating);
   return (
     <>
       {loading || hotelsByRating.length < 1 ? (
