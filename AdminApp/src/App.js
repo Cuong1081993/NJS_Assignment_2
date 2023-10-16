@@ -7,9 +7,7 @@ import Register from "./pages/Register/Register";
 import Page404 from "./pages/404/404";
 import Page500 from "./pages/500/500";
 import DefaultLayout from "./components/DefaultLayout/DefaultLayout";
-import Transaction from "./components/transaction/Transaction";
-import RequieAuth from "./RequieAuth";
-import Dashboard from "./components/Dashboard/Dashboard";
+
 import { useEffect } from "react";
 const AuthContext = createContext();
 
@@ -58,7 +56,7 @@ function App() {
               name="Admin Home Page"
               element={
                 <AuthContext.Provider value={isAuth}>
-                  <DefaultLayout onLogout={loginHandler} isAuth={isAuth} />
+                  <DefaultLayout onLogout={logoutHandler} isAuth={isAuth} />
                 </AuthContext.Provider>
               }
             />

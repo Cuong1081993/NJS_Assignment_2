@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import NavBar from "../Navbar/Navbar";
-import { format } from "date-fns";
-import Loading from "../Loading/Loading";
 import axios from "axios";
-
-const Dashboard = () => {
-  let countNum = 1;
+import Loading from "../../components/Loading/Loading";
+import { format } from "date-fns";
+import Navbar from "../Navbar/Navbar";
+const Transaction = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [transactions, setTransactions] = useState([]);
+
+  console.log("Transaction");
 
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
         const response = await axios({
-          url: `http://localhost:5000/api/admin/transactions`,
+          url: "http://localhost:5000/api/admin/transactions",
           method: "GET",
         });
         setTransactions(response.data.transactions);
@@ -22,19 +22,21 @@ const Dashboard = () => {
           setErrorMessage(error.message);
         }
       }
-      fetchTransaction();
     };
-    console.log(transactions);
+    fetchTransaction();
   }, []);
   return (
     <div>
-      <NavBar />
+      <Navbar />
       <div className="container">
-        <h1>Dashboard: Lastest transaction</h1>
+        <div className="d-flex flex-row justify-align-content-between p-3 align-align-items-center">
+          <h1> Dashboard: Lastest transactions</h1>
+        </div>
         <table className="table text-center shadow">
           <thead className="bg-light">
             <tr>
               <th scope="col">#</th>
+              <th scope="col">User Name</th>
               <th scope="col">Hotel</th>
               <th scope="col">Room</th>
               <th scope="col">Date</th>
@@ -44,7 +46,7 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {transactions.length === 0 ? (
+            {!transactions.length ? (
               <tr>
                 <td colSpan={7}>
                   <Loading />
@@ -53,33 +55,40 @@ const Dashboard = () => {
             ) : (
               transactions.map((transaction) => {
                 return (
-                  <tr key={transaction._id}>
-                    <th scope="row">{countNum++}</th>
-                    <td>{transaction.hotel.name}</td>
-                    <td>
-                      {transaction.room.map((r, i) => {
-                        <span key={i}>{r}</span>;
-                      })}
-                    </td>
-                    <td>
-                      {format(new Date(transaction.dateStart), "dd/MM/yyyy") +
-                        " - " +
-                        format(new Date(transaction.dateEnd), "dd/MM/yyyy")}
-                    </td>
-                    <td>{transaction.price}</td>
-                    <td>{transaction.payment}</td>
-                    <td>
-                      <span
-                        className={
-                          transaction.status !== "Booked"
-                            ? "text-success"
-                            : "text-danger"
-                        }
-                      >
-                        {transaction.status}
-                      </span>
-                    </td>
-                  </tr>
+                  transaction.hotel &&
+                  transaction.user && (
+                    <tr key={transaction._id}>
+                      <th scope="row">{transaction._id}</th>
+                      <td>{transaction.user.userName}</td>
+                      <td>{transaction.hotel.name}</td>
+                      <td>
+                        {transaction.room.map((r, i) => (
+                          <span key={i}>
+                            {r}
+                            {i < transaction.room.length - 1 && ", "}
+                          </span>
+                        ))}
+                      </td>
+                      <td>
+                        {format(new Date(transaction.dateStart), "dd/MM/yyy") +
+                          "-" +
+                          format(new Date(transaction.dateEnd), "dd/MM/yyyy")}
+                      </td>
+                      <td>{transaction.price}</td>
+                      <td>{transaction.payment}</td>
+                      <td>
+                        <span
+                          className={
+                            transaction.status !== "Booked"
+                              ? "btn btn-outline-success"
+                              : "btn btn-outline-danger"
+                          }
+                        >
+                          {transaction.status}
+                        </span>
+                      </td>
+                    </tr>
+                  )
                 );
               })
             )}
@@ -89,4 +98,4 @@ const Dashboard = () => {
     </div>
   );
 };
-export default Dashboard;
+export default Transaction;
